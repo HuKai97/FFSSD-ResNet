@@ -111,7 +111,7 @@ datasets
 训练验证测试只需要修改train.py/test.py/demo.py中的配置文件地址和权重文件地址即可
 
 
-# 训练效果
+# 训练效果（待更新）
 
 ![损失函数](figures/losses.png)
 
