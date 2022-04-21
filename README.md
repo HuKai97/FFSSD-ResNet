@@ -117,3 +117,5 @@ datasets
 
 ![学习率](figures/lr.png)
 
+# Reference
+[lufficc/SSD](https://github.com/lufficc/SSD)
