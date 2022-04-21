@@ -2,7 +2,7 @@
 
 这个仓库是在这个仓库[SSD](https://github.com/lufficc/SSD). 基础上进行改进的
 
-主要改进点：
+在SSD基础上，主要改进点：
  1) 替换backbone为[Resnet](https://arxiv.org/abs/1512.03385)   
 
  2) 添加一种更加轻量高效的特征融合方式 [feature fusion module](https://arxiv.org/abs/1712.00960v1)   
