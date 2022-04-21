@@ -1,6 +1,6 @@
 # 在私人病虫害数据集上进行SSD改进
 
-这个仓库是在这个仓库[SSD](https://github.com/lufficc/SSD). 基础上进行改进的
+代码是在这个仓库[SSD](https://github.com/lufficc/SSD). 基础上进行添加、修改的
 
 在SSD基础上，主要改进点：
  1) 替换backbone为[Resnet](https://arxiv.org/abs/1512.03385)   
