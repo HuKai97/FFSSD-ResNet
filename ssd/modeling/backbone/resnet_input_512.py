@@ -409,50 +409,51 @@ class ResNet(nn.Module):
 
             return tuple(features)
         else:      # 使用特征融合
-            features = []
+            features = []  # 输入x=[bs,3,512,512]
 
             x = self.conv1(x)     # conv1+bn+relu
             x = self.bn1(x)
             x = self.relu(x)
-            x = self.maxpool(x)   # max pool
+            x = self.maxpool(x)   # max pool   [bs,64,128,128]
 
-            x = self.layer1(x)    # layer1
+            x = self.layer1(x)    # layer1  conv2_x   [bs,256,128,128]
 
-            x = self.layer2(x)               # layer2
+            x = self.layer2(x)               # layer2   conv3_x  [bs,512,64,64]
             features.append(self.conv2(x))   # 预测特征层1
 
-            x = self.layer3(x)                         # layer3
+            x = self.layer3(x)                         # layer3   conv4_x  [bs,1024,32,32]
             features.append(self.bi1(self.conv3(x)))   # 预测特征层3  2倍上采样
 
-            x = self.layer4(x)                         # layer4
+            x = self.layer4(x)                         # layer4   conv5_x  [bs,2048,16,16]
             features.append(self.bi2(self.conv4(x)))   # 预测特征层4  4倍上采样
 
-            x = torch.cat((features), 1)               # 特征融合
+            # features: [bs,256,64,64] x 3
+            x = torch.cat((features), 1)               # 特征融合  [bs,768,64,64]
 
             x = self.conv5(x)                          # 在融合后的特征图上进行conv
-            x = self.bn2(x)
+            x = self.bn2(x)                            # [bs,512,64,64]
 
             feature_map = []
 
-            x = self.extra_layers_ff[0](x)             # 1
+            x = self.extra_layers_ff[0](x)             # 1  [bs,512,64,64]
             feature_map.append(x)
 
-            x = self.extra_layers_ff[1](x)             # 2
+            x = self.extra_layers_ff[1](x)             # 2  [bs,1024,32,32]
             feature_map.append(x)
 
-            x = self.extra_layers_ff[2](x)             # 3
+            x = self.extra_layers_ff[2](x)             # 3 [bs,2048,16,16]
             feature_map.append(x)
 
-            x = self.extra_layers_ff[3](x)             # 4
+            x = self.extra_layers_ff[3](x)             # 4 [bs,1024,8,8]
             feature_map.append(x)
 
-            x = self.extra_layers_ff[4](x)             # 5
+            x = self.extra_layers_ff[4](x)             # 5 [bs,512,4,4]
             feature_map.append(x)
 
-            x = self.extra_layers_ff[5](x)             # 6
+            x = self.extra_layers_ff[5](x)             # 6 [bs,256,2,2]
             feature_map.append(x)
 
-            x = self.extra_layers_ff[6](x)             # 7
+            x = self.extra_layers_ff[6](x)             # 7 [bs,512,1,1]
             feature_map.append(x)
 
             return tuple(feature_map)
